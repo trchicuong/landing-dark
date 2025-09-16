@@ -1,0 +1,223 @@
+:root {
+    --glow-color: rgba(255, 255, 255, 0.7);
+    --text-color: #a9a9a9;
+    --main-title-color: #ffffff;
+    --background-color: #050505;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--text-color);
+    cursor: none;
+    overflow: hidden;
+}
+
+#star-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#cursor-light {
+    position: fixed;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 50%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: background 0.2s ease;
+    z-index: 2;
+}
+
+#cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background-color: var(--main-title-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 99999;
+    box-shadow: 0 0 10px var(--main-title-color);
+}
+
+.character-image {
+    filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.25));
+    max-height: 90vh;
+    animation: breathing 5s ease-in-out infinite;
+    border-radius: 1.5rem;
+}
+
+@keyframes breathing {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.main-title {
+    position: relative;
+    animation: pulse-glow 4s infinite alternate;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+@keyframes pulse-glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    }
+
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 40px #eee;
+    }
+}
+
+.typing-cursor::after {
+    content: '█';
+    display: inline-block;
+    animation: blink 0.8s infinite;
+    color: var(--main-title-color);
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+    cursor: none;
+}
+
+#splash-screen.fade-out {
+    opacity: 0;
+}
+
+.splash-text {
+    color: white;
+    font-size: 2.5rem;
+    font-family: 'VT323', monospace;
+    animation: pulse-glow 2s infinite alternate;
+    border: 2px solid white;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 20px white;
+    border-radius: 1rem;
+}
+
+main {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+main.visible {
+    opacity: 1;
+}
+
+.content-text p {
+    text-shadow: 0 0 8px rgba(0, 0, 0, 1);
+}
+
+#volume-control {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+#volume-control svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: #888;
+    transition: all 0.3s ease;
+}
+
+#volume-control:hover svg {
+    color: #fff;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 10px #fff);
+}
+
+#discord-activity-card {
+    background: rgba(30, 30, 30, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 70px;
+}
+
+.discord-avatar,
+.activity-thumbnail {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.discord-avatar {
+    border-radius: 50%;
+    margin-left: 0.5rem;
+}
+
+.activity-thumbnail {
+    border-radius: 0.5rem;
+    margin-left: auto;
+    margin-right: 0.5rem;
+}
+
+.activity-text {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.activity-text p:first-child {
+    margin-bottom: 4px;
+}
+
+.activity-text p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+    .main-title {
+        white-space: nowrap;
+    }
+}

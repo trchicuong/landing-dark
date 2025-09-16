@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tran Chi Cuong</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="public/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="public/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/images/favicon-16x16.png">
+
+    <link rel="stylesheet" href="/src/css/style.css">
+</head>
+
+<body class="text-gray-400">
+
+    <div id="splash-screen">
+        <h2 class="splash-text">CLICK TO ENTER</h2>
+    </div>
+
+    <div id="volume-control" title="Bật/Tắt âm thanh">
+        <svg id="volume-on-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+        </svg>
+        <svg id="volume-off-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="hidden">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+        </svg>
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="/public/audio/audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <canvas id="star-background"></canvas>
+    <div id="cursor-light"></div>
+    <div id="cursor-dot"></div>
+
+    <main class="min-h-screen w-full flex items-center justify-center p-4 relative z-10">
+        <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-16 items-center">
+
+            <div class="md:col-span-2 flex items-center justify-center order-2 md:order-1">
+                <img src="/public/images/avatar.gif" alt="Dark monochrome anime character"
+                    class="character-image w-full h-auto object-contain">
+            </div>
+
+            <div
+                class="md:col-span-3 flex flex-col justify-center text-center md:text-left order-1 md:order-2 space-y-6 content-text">
+                <h1 id="main-title" data-text="trchicuong (chustin)" class="main-title font-bold text-white h-24"></h1>
+                <p class="text-lg md:text-xl max-w-xl mx-auto md:mx-0 leading-relaxed">one person in the world..</p>
+
+                <div id="discord-activity"
+                    class="w-full max-w-sm mx-auto md:mx-0 opacity-0 transition-opacity duration-500"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script type="module" src="/src/js/script.js"></script>
+</body>
+
+</html>
