@@ -17,18 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let stars = [];
     let numStars = 500;
     let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let audioEnabled = false;
-    let synth, noiseSynth;
-
-    function setupAudio() {
-        synth = new Tone.FMSynth({ harmonicity: 3, modulationIndex: 10, envelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 }, modulationEnvelope: { attack: 0.01, decay: 0.2, sustain: 0.1, release: 0.5 } }).toDestination();
-        noiseSynth = new Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 0.005, decay: 0.1, sustain: 0 } }).toDestination();
-        audioEnabled = true;
-    }
 
     splashScreen.addEventListener('click', () => {
         backgroundMusic.play().catch(e => console.error("Audio play failed:", e));
-        if (!audioEnabled && Tone.context.state !== 'running') { Tone.start().then(setupAudio); }
 
         document.body.style.overflow = 'auto';
 
