@@ -127,9 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const activity = d.activities?.find(act => act.type === 0);
         const spotify = d.spotify;
 
-        const userAvatar = d.discord_user.avatar
-            ? `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.webp`
-            : `https://cdn.discordapp.com/embed/avatars/0.png`;
+        let userAvatar;
+        if (d.discord_user.avatar) {
+            const avatarHash = d.discord_user.avatar;
+            if (avatarHash.startsWith('a_')) {
+                userAvatar = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${avatarHash}.gif`;
+            } else {
+                userAvatar = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${avatarHash}.webp`;
+            }
+        } else {
+            const defaultAvatarIndex = d.discord_user.discriminator % 5;
+            userAvatar = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`;
+        }
 
         let username = d.discord_user.username;
         let statusLine = '';
