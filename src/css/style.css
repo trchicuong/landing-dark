@@ -130,10 +130,6 @@ body {
     font-size: 2.5rem;
     font-family: 'VT323', monospace;
     animation: pulse-glow 2s infinite alternate;
-    border: 2px solid white;
-    padding: 1rem 2rem;
-    box-shadow: 0 0 20px white;
-    border-radius: 1rem;
 }
 
 main {
@@ -182,6 +178,22 @@ main.visible {
     align-items: center;
     gap: 0.75rem;
     min-height: 70px;
+    overflow: hidden;
+}
+
+.discord-nameplate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#discord-activity-card>* {
+    z-index: 1;
 }
 
 .discord-avatar,
@@ -197,6 +209,14 @@ main.visible {
     margin-left: 0.5rem;
 }
 
+.discord-avatar-decoration {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
 #discord-status-icon {
     position: absolute;
     bottom: 0.5px;
@@ -208,6 +228,7 @@ main.visible {
     align-items: center;
     line-height: 1;
     color: white;
+    z-index: 2;
 }
 
 .activity-thumbnail {

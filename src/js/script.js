@@ -136,10 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let activityImageHtml = '';
         const startTime = spotify?.timestamps?.start || activity?.timestamps?.start;
 
-        if (activity && activity.assets?.large_image) {
-            const imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.webp`;
-            statusLine = `${activity.details || activity.name}`;
-            activityImageHtml = `<img src="${imageUrl}" alt="${activity.assets?.large_text || activity.name}" class="activity-thumbnail">`;
+        if (activity) {
+            statusLine = activity.details || activity.name;
+
+            if (activity.assets?.large_image) {
+                const imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.webp`;
+                activityImageHtml = `<img src="${imageUrl}" alt="${activity.assets?.large_text || activity.name}" class="activity-thumbnail">`;
+            }
         } else if (spotify) {
             statusLine = `Listening to ${spotify.song}`;
             activityImageHtml = `<img src="${spotify.album_art_url}" alt="Spotify Album Art" class="activity-thumbnail">`;
@@ -156,11 +159,34 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         const statusIcon = statusIconMap[d.discord_status] || '⚪';
 
+        let avatarDecorationHtml = '';
+        const decorationData = d.discord_user.avatar_decoration_data;
+        if (decorationData && decorationData.asset) {
+            const decorationUrl = `https://cdn.discordapp.com/avatar-decoration-presets/${decorationData.asset}.png`;
+            avatarDecorationHtml = `<img src="${decorationUrl}" alt="Avatar Decoration" class="discord-avatar-decoration">`;
+        }
+
+        let nameplateHtml = '';
+        const nameplateData = d.discord_user?.collectibles?.nameplate;
+        if (nameplateData && nameplateData.asset) {
+            const nameplateUrl = `https://cdn.discordapp.com/assets/collectibles/${nameplateData.asset}asset.webm`;
+
+            nameplateHtml = `<video 
+                        src="${nameplateUrl}" 
+                        class="discord-nameplate" 
+                        autoplay 
+                        loop 
+                        muted 
+                        playsinline 
+                        aria-hidden="true">
+                    </video>`;
+        }
+
         const content = `
                 <div id="discord-activity-card">
-                    <div class="relative flex-shrink-0">
+                    ${nameplateHtml} <div class="relative flex-shrink-0">
                         <img src="${userAvatar}" alt="Discord Avatar" class="discord-avatar">
-                        <span id="discord-status-icon" class="status-${d.discord_status}">${statusIcon}</span>
+                        ${avatarDecorationHtml} <span id="discord-status-icon" class="status-${d.discord_status}">${statusIcon}</span>
                     </div>
                     <div class="activity-text flex-grow">
                         <p class="font-bold text-white text-lg">${username}</p>
