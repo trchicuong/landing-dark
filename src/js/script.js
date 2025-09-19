@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     splashScreen.addEventListener('click', () => {
         backgroundMusic.play().catch(e => console.error("Audio play failed:", e));
         if (!audioEnabled && Tone.context.state !== 'running') { Tone.start().then(setupAudio); }
+
+        document.body.style.overflow = 'auto';
+
         splashScreen.classList.add('fade-out');
         mainContent.classList.add('visible');
         setTimeout(() => {
@@ -43,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         backgroundMusic.muted = !backgroundMusic.muted;
         volumeOnIcon.classList.toggle('hidden');
         volumeOffIcon.classList.toggle('hidden');
-        if (audioEnabled) { noiseSynth.triggerAttackRelease('8n'); }
     });
 
     window.addEventListener('mousemove', e => {
@@ -143,31 +145,31 @@ document.addEventListener('DOMContentLoaded', () => {
         let activityImageHtml = '';
         const startTime = spotify?.timestamps?.start || activity?.timestamps?.start;
 
-        if (spotify) {
-            statusLine = `Listening to ${spotify.song}`;
-            activityImageHtml = `<img src="${spotify.album_art_url}" alt="Spotify Album Art" class="activity-thumbnail">`;
-        } else if (activity && activity.assets?.large_image) {
+        if (activity && activity.assets?.large_image) {
             const imageUrl = `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.webp`;
             statusLine = `${activity.details || activity.name}`;
             activityImageHtml = `<img src="${imageUrl}" alt="${activity.assets?.large_text || activity.name}" class="activity-thumbnail">`;
+        } else if (spotify) {
+            statusLine = `Listening to ${spotify.song}`;
+            activityImageHtml = `<img src="${spotify.album_art_url}" alt="Spotify Album Art" class="activity-thumbnail">`;
         } else {
             const statusMap = { 'online': 'Online', 'idle': 'Idle', 'dnd': 'Do Not Disturb', 'offline': 'Offline' };
             statusLine = statusMap[d.discord_status] || 'Offline';
         }
 
-        const statusColorMap = {
-            online: 'bg-green-500',
-            idle: 'bg-yellow-500',
-            dnd: 'bg-red-500',
-            offline: 'bg-gray-600'
+        const statusIconMap = {
+            online: '🟢',
+            idle: '🌙',
+            dnd: '⛔',
+            offline: '⚪'
         };
-        const statusColor = statusColorMap[d.discord_status] || 'bg-gray-600';
+        const statusIcon = statusIconMap[d.discord_status] || '⚪';
 
         const content = `
                 <div id="discord-activity-card">
                     <div class="relative flex-shrink-0">
                         <img src="${userAvatar}" alt="Discord Avatar" class="discord-avatar">
-                        <span class="absolute bottom-0.5 right-0.5 block h-4 w-4 rounded-full ${statusColor} border-2" style="border-color: rgba(30, 30, 30, 1)"></span>
+                        <span id="discord-status-icon" class="status-${d.discord_status}">${statusIcon}</span>
                     </div>
                     <div class="activity-text flex-grow">
                         <p class="font-bold text-white text-lg">${username}</p>
